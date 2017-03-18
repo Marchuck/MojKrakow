@@ -3,9 +3,13 @@ package pl.mojkrakow.mojkrakow;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -18,6 +22,7 @@ import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 import io.reactivex.functions.Consumer;
 import pl.mojkrakow.mojkrakow.takephoto.CameraActivity;
+import pl.mojkrakow.mojkrakow.utils.LockableBottomSheetBehavior;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.Manifest.permission.CAMERA;
@@ -40,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         if (rxPermissions == null) rxPermissions = new RxPermissions(this);
         return rxPermissions;
     }
+
+
+    @BindView(R.id.bottom_sheet)
+    NestedScrollView nestedScrollView;
+
+    BottomSheetBehavior bottomSheetBehavior;
 
     @BindView(R.id.image)
     ImageView flawImage;
@@ -67,12 +78,36 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    @DebugLog
+    void setupBottomSheetView() {
+        bottomSheetBehavior = BottomSheetBehavior.from(nestedScrollView);
+        bottomSheetBehavior.setPeekHeight(0);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                Log.d(TAG, "onStateChanged: " + (newState));
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    if (bottomSheetBehavior instanceof LockableBottomSheetBehavior) {
+                        ((LockableBottomSheetBehavior) bottomSheetBehavior).setLocked(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                //mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setupBottomSheetView();
         Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
     }
 
@@ -108,5 +143,11 @@ public class MainActivity extends AppCompatActivity {
 //                    .fit()
 //                    .into(flawImage);
         }
+    }
+
+
+    void showTagsToPick(){
+        BottomSheetMapFragment bottomSheetDialogFragment = new BottomSheetMapFragment();
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }
 }
