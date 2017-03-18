@@ -3,6 +3,8 @@ package pl.mojkrakow.mojkrakow;
 import android.app.Application;
 import android.content.Context;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 /**
  * Project "MojKrakow"
  * <p>
@@ -22,5 +24,14 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         CONTEXT = this.getApplicationContext();
+        installCalligraphy();
+    }
+
+    void installCalligraphy() {
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("caviar_dreams.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 }

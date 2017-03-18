@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
-    <evalu.com.evalu.utils.takephoto.SquareImageView
+    <pl.mojkrakow.mojkrakow.takephoto.SquareImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
