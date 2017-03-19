@@ -2,6 +2,8 @@ package pl.mojkrakow.mojkrakow;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -68,20 +70,12 @@ public class PickImageFragment extends Fragment {
 
     public static PickImageFragment newInstance() {
         PickImageFragment fragment = new PickImageFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
     }
 
     @Override
@@ -95,16 +89,14 @@ public class PickImageFragment extends Fragment {
 
     @Override
     @DebugLog
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (resultCode != Activity.RESULT_OK) return;
         if (requestCode == REQUEST_CAMERA) {
-            App.getApp().imageUriSubject.onNext(data.getData());
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getMainActivity().switchToFragment(AfterPickedImageFragment.newInstance());
-                }
-            }, 200);
+            Uri uri = data.getData();
+            Bitmap bmp = BitmapFactory.decodeFile(data.getData().getPath());
+            getMainActivity().subject.onNext(bmp);
+            getMainActivity().switchToFragment(AfterPickedImageFragment.newInstance());
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

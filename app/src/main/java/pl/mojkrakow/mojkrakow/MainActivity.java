@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 import io.reactivex.functions.Consumer;
+import io.reactivex.subjects.ReplaySubject;
+import io.reactivex.subjects.Subject;
 import pl.mojkrakow.mojkrakow.takephoto.CameraActivity;
 import pl.mojkrakow.mojkrakow.utils.LockableBottomSheetBehavior;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final int REQUEST_CAMERA = 2137;
+    public Uri data;
+
+    public Subject<Object> subject = ReplaySubject.create();
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -55,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-  public void switchToFragment(Fragment f){
+    public void switchToFragment(Fragment f) {
 
-      getSupportFragmentManager()
-              .beginTransaction()
-              .replace(R.id.placeholder,f)
-              .commitAllowingStateLoss();
-  }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.placeholder, f)
+                .commitAllowingStateLoss();
+    }
 
     public RxPermissions getRxPermissions() {
         return new RxPermissions(this);

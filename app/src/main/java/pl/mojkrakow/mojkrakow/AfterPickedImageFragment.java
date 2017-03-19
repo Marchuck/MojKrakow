@@ -29,6 +29,7 @@ import io.reactivex.functions.Consumer;
 public class AfterPickedImageFragment extends Fragment {
     public static final String TAG = AfterPickedImageFragment.class.getSimpleName();
 
+
     public AfterPickedImageFragment() {
     }
 
@@ -37,20 +38,14 @@ public class AfterPickedImageFragment extends Fragment {
 
     public static AfterPickedImageFragment newInstance() {
         AfterPickedImageFragment fragment = new AfterPickedImageFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
+
     }
 
     @Override
@@ -69,20 +64,18 @@ public class AfterPickedImageFragment extends Fragment {
     @DebugLog
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        updateImage(getMainActivity().data);
 
-        App.getApp().imageUriSubject
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Uri>() {
-                    @Override
-                    public void accept(Uri uri) throws Exception {
-                        updateImage(uri);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG, "accept: ", throwable);
-                    }
-                });
+        getMainActivity().subject.subscribe(new Consumer<Object>() {
+            @Override
+            @DebugLog
+            public void accept(Object uri) throws Exception {
+                if (uri instanceof Uri)
+                    updateImage((Uri) uri);
+
+            }
+        });
+
     }
 
     private void updateImage(Uri recentUri) {
@@ -97,5 +90,10 @@ public class AfterPickedImageFragment extends Fragment {
 //                    .fit()
 //                    .into(flawImage);
         }
+    }
+
+    @DebugLog
+    public MainActivity getMainActivity() {
+        return (MainActivity) getActivity();
     }
 }
