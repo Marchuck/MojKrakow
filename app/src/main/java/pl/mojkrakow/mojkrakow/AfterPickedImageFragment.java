@@ -1,11 +1,9 @@
 package pl.mojkrakow.mojkrakow;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -33,7 +30,7 @@ public class AfterPickedImageFragment extends Fragment {
     public AfterPickedImageFragment() {
     }
 
-    @BindView(R.id.image)
+    @BindView(R.id.afterpick_image)
     ImageView imageView;
 
     public static AfterPickedImageFragment newInstance() {

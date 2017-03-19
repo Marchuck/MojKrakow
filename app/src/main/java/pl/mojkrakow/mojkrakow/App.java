@@ -20,6 +20,7 @@ public class App extends Application {
     private static Context CONTEXT;
 
     public Subject<Uri> imageUriSubject = BehaviorSubject.create();
+    public Subject<Boolean> clicked = BehaviorSubject.create();
     public Uri data;
 
     public static App getApp() {

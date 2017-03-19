@@ -75,5 +75,6 @@ public class CategoryItemImageView extends ImageView implements View.OnClickList
                     .start();
 
         }
+        App.getApp().clicked.onNext(true);
     }
 }

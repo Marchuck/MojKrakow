@@ -5,28 +5,29 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient">
+    android:background="@color/colorPrimary">
 
     <RelativeLayout
+        android:id="@+id/reportEventLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="pl.mojkrakow.mojkrakow.MainActivity">
+        android:visibility="visible"
+        tools:context="pl.mojkrakow.mojkrakow.MainActivity"
+        tools:visibility="visible">
 
 
         <ImageView
-            android:id="@+id/image"
-            android:layout_width="200sp"
-            android:layout_height="200sp"
-            android:layout_centerHorizontal="true" />
-
-        <ImageView
+            android:layout_marginTop="40sp"
+            android:paddingTop="40sp"
             android:id="@+id/camera"
             android:layout_width="150sp"
             android:layout_height="150sp"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/big_camera" />
 
         <ImageView
+            android:layout_marginTop="30sp"
+            android:layout_marginBottom="15sp"
             android:id="@+id/arrow"
             android:layout_width="wrap_content"
             android:layout_height="80sp"
@@ -36,6 +37,8 @@
 
         <TextView
             android:id="@+id/text"
+            android:layout_margin="15sp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/arrow"
@@ -48,14 +51,158 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/bottom_sheet"
+    <RelativeLayout
+        android:id="@+id/afterpick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:clipToPadding="true"
-        app:layout_behavior="pl.mojkrakow.mojkrakow.utils.LockableBottomSheetBehavior">
+        android:visibility="gone"
+        tools:context="pl.mojkrakow.mojkrakow.MainActivity"
+        tools:visibility="invisible">
 
-    </android.support.v4.widget.NestedScrollView>
+        <ImageView
+            android:layout_margin="8sp"
+            android:id="@+id/afterpick_image"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_centerHorizontal="true"
+            tools:src="@drawable/category_tree" />
+
+        <TextView
+            android:layout_margin="8sp"
+
+            android:id="@+id/choose_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/afterpick_image"
+            android:layout_centerHorizontal="true"
+            android:text="Wybierz kategorię"
+            android:textColor="@android:color/black"
+            android:textSize="25sp" />
+
+        <RelativeLayout
+            android:id="@+id/group1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/choose_category">
+
+            <pl.mojkrakow.mojkrakow.CategoryItemImageView
+                android:id="@+id/tree"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:layout_marginLeft="40sp"
+                android:src="@drawable/category_tree" />
+
+            <pl.mojkrakow.mojkrakow.CategoryItemImageView
+                android:id="@+id/smog"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="70sp"
+                android:padding="@dimen/image_padding"
+                android:src="@drawable/category_smog" />
+
+            <TextView
+                android:id="@+id/tree_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tree"
+                android:layout_margin="8sp"
+                android:padding="8sp"
+                android:text="złamane drzewo"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_category" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tree"
+                android:layout_margin="8sp"
+                android:layout_toRightOf="@+id/tree_label"
+                android:gravity="center"
+                android:padding="8sp"
+                android:text="alarm smogowy"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_category" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/group1">
+
+            <pl.mojkrakow.mojkrakow.CategoryItemImageView
+                android:id="@+id/bad"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:layout_marginLeft="40sp"
+                android:src="@drawable/category_car" />
+
+            <pl.mojkrakow.mojkrakow.CategoryItemImageView
+                android:id="@+id/broken"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="70sp"
+
+                android:layout_marginLeft="@dimen/image_margin"
+                android:src="@drawable/category_bench" />
+
+            <TextView
+                android:id="@+id/bad_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/broken"
+                android:layout_margin="8sp"
+                android:padding="8sp"
+                android:text="złamane drzewo"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_category" />
+
+            <TextView
+                android:id="@+id/broken_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bad"
+                android:layout_margin="8sp"
+                android:layout_toRightOf="@+id/bad_label"
+                android:gravity="center"
+                android:padding="8sp"
+                android:text="uszkodzenie mienia"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_category" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/send"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sentDone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/request_sent"
+        android:visibility="gone"
+        tools:visibility="invisible">
+
+        <Button
+            android:id="@+id/okButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="48sp"
+            android:text="@android:string/ok" />
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

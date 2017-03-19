@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
     public Uri data;
 
     public Subject<Object> subject = ReplaySubject.create();
+    private BackPressable backPressedCallback;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         switchToFragment(PickImageFragment.newInstance());
     }
-
 
     public void switchToFragment(Fragment f) {
 
@@ -78,4 +77,21 @@ public class MainActivity extends AppCompatActivity {
 //        BottomSheetFragment bottomSheetDialogFragment = new BottomSheetFragment();
 //        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
 //    }
+
+    @DebugLog
+    @Override
+    public void onBackPressed() {
+        if (backPressedCallback != null) {
+            if (!backPressedCallback.shouldExitApp()) {
+                backPressedCallback.onBackButtonPressed();
+                return;
+            }
+        }
+        super.onBackPressed();
+
+    }
+
+    public void setBackPressedCallback(PickImageFragment backPressedCallback) {
+        this.backPressedCallback = backPressedCallback;
+    }
 }
