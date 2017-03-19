@@ -1,8 +1,6 @@
 package pl.mojkrakow.mojkrakow;
 
-import android.Manifest;
 import android.app.Dialog;
-import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -13,15 +11,9 @@ import android.view.InflateException;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import hugo.weaving.DebugLog;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import pl.mojkrakow.mojkrakow.utils.LockableBottomSheetBehavior;
 
 import static android.support.design.widget.BottomSheetBehavior.STATE_HIDDEN;
@@ -31,9 +23,9 @@ import static android.support.design.widget.BottomSheetBehavior.STATE_HIDDEN;
  * lukasz@next42.net
  */
 
-public class BottomSheetMapFragment extends BottomSheetDialogFragment {
+public class BottomSheetFragment extends BottomSheetDialogFragment {
 
-    public static final String TAG = BottomSheetMapFragment.class.getSimpleName();
+    public static final String TAG = BottomSheetFragment.class.getSimpleName();
 
     @Nullable
     View contentView;
@@ -49,9 +41,9 @@ public class BottomSheetMapFragment extends BottomSheetDialogFragment {
                 dismiss();
             }
             if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                if (bottomSheetBehavior instanceof LockableBottomSheetBehavior) {
-                    ((LockableBottomSheetBehavior) bottomSheetBehavior).setLocked(true);
-                }
+//                if (bottomSheetBehavior instanceof LockableBottomSheetBehavior) {
+//                    ((LockableBottomSheetBehavior) bottomSheetBehavior).setLocked(true);
+//                }
             }
         }
 
@@ -63,12 +55,6 @@ public class BottomSheetMapFragment extends BottomSheetDialogFragment {
     @BindView(R.id.bottom_sheet_test_map)
     CoordinatorLayout coordinatorLayout;
 
-    @OnClick(R.id.bottom_sheet_test_map_close_layout)
-    void onClose() {
-        if (bottomSheetBehavior != null) {
-            mBottomSheetBehaviorCallback.onStateChanged(null, STATE_HIDDEN);
-        }
-    }
 
     @Override
     @DebugLog

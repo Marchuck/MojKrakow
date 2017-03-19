@@ -3,6 +3,8 @@ package pl.mojkrakow.mojkrakow;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.widget.NestedScrollView;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView flawImage;
 
     @DebugLog
-    @OnClick(R.id.pickImage)
+    @OnClick(R.id.camera)
     void onImagePick() {
 
         getRxPermissions()
@@ -89,9 +91,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 Log.d(TAG, "onStateChanged: " + (newState));
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    if (bottomSheetBehavior instanceof LockableBottomSheetBehavior) {
-                        ((LockableBottomSheetBehavior) bottomSheetBehavior).setLocked(true);
-                    }
+
                 }
             }
 
@@ -128,6 +128,14 @@ public class MainActivity extends AppCompatActivity {
         Uri photoUri = data.getData();
         Log.d(TAG, "onActivityResult: loading photo");
         updateImage(photoUri);
+
+//        new Handler(Looper.getMainLooper())
+//                .postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                showTagsToPick();
+//            }
+//        }, 555);
     }
 
 
@@ -146,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void showTagsToPick(){
-        BottomSheetMapFragment bottomSheetDialogFragment = new BottomSheetMapFragment();
+    void showTagsToPick() {
+        BottomSheetFragment bottomSheetDialogFragment = new BottomSheetFragment();
         bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }
 }
