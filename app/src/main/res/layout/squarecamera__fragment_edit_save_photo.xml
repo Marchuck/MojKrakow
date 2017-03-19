@@ -16,23 +16,24 @@
         android:scaleType="centerCrop"
         android:transitionName="fragment_profile_image" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/save_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20sp"
         android:background="@android:color/transparent"
-        android:padding="10dp"
-        android:src="@drawable/squarecamera__save_photo_drawable" />
+        android:src="@drawable/squarecamera__save_unselected" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20sp"
         android:background="@android:color/transparent"
         android:onClick="onCancel"
-        android:padding="10dp"
-        android:src="@drawable/squarecamera__cancel_drawable" />
+        android:src="@drawable/squarecamera__cancel_unselected" />
 
 </RelativeLayout>

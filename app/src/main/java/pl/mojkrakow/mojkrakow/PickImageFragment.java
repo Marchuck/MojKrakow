@@ -210,7 +210,7 @@ public class PickImageFragment extends Fragment implements BackPressable {
 
     @Override
     public boolean shouldExitApp() {
-        return afterPick.getVisibility() == View.VISIBLE;
+        return reportEventLayout.getVisibility() == View.VISIBLE;
     }
 
     MainActivity getMainActivity() {
