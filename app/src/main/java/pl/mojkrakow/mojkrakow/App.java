@@ -2,7 +2,10 @@ package pl.mojkrakow.mojkrakow;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
 
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -15,6 +18,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class App extends Application {
 
     private static Context CONTEXT;
+
+    public Subject<Uri> imageUriSubject = BehaviorSubject.create();
 
     public static App getApp() {
         return (App) CONTEXT;
