@@ -13,37 +13,37 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         tools:context="pl.mojkrakow.mojkrakow.MainActivity"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
 
         <ImageView
-            android:layout_marginTop="40sp"
-            android:paddingTop="40sp"
             android:id="@+id/camera"
             android:layout_width="150sp"
             android:layout_height="150sp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="40sp"
+            android:paddingTop="40sp"
             android:src="@drawable/big_camera" />
 
         <ImageView
-            android:layout_marginTop="30sp"
-            android:layout_marginBottom="15sp"
             android:id="@+id/arrow"
             android:layout_width="wrap_content"
             android:layout_height="80sp"
             android:layout_below="@+id/camera"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15sp"
+            android:layout_marginTop="30sp"
             android:src="@drawable/arrow_up" />
 
         <TextView
             android:id="@+id/text"
-            android:layout_margin="15sp"
-
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_below="@+id/arrow"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_margin="15sp"
             android:padding="16sp"
             android:text="zgłoś zdarzenie"
             android:textColor="@android:color/black"
@@ -57,24 +57,24 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         tools:context="pl.mojkrakow.mojkrakow.MainActivity"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <ImageView
-            android:layout_margin="8sp"
             android:id="@+id/afterpick_image"
             android:layout_width="150sp"
             android:layout_height="150sp"
             android:layout_centerHorizontal="true"
+            android:layout_margin="8sp"
             tools:src="@drawable/category_tree" />
 
         <TextView
-            android:layout_margin="8sp"
-
             android:id="@+id/choose_category"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/afterpick_image"
             android:layout_centerHorizontal="true"
+            android:layout_margin="8sp"
             android:text="Wybierz kategorię"
             android:textColor="@android:color/black"
             android:textSize="25sp" />
@@ -107,18 +107,23 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tree"
                 android:layout_margin="8sp"
+                android:gravity="center"
+                android:maxWidth="140sp"
                 android:padding="8sp"
-                android:text="złamane drzewo"
+                android:text="utrudnienia na drodze"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_category" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/tree"
-                android:layout_margin="8sp"
-                android:layout_toRightOf="@+id/tree_label"
+                android:layout_marginBottom="8sp"
+                android:layout_marginRight="40sp"
+                android:layout_marginTop="8sp"
                 android:gravity="center"
+                android:maxWidth="140sp"
                 android:padding="8sp"
                 android:text="alarm smogowy"
                 android:textColor="@android:color/black"
@@ -144,9 +149,8 @@
                 android:layout_width="@dimen/image_size"
                 android:layout_height="@dimen/image_size"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="70sp"
-
                 android:layout_marginLeft="@dimen/image_margin"
+                android:layout_marginRight="70sp"
                 android:src="@drawable/category_bench" />
 
             <TextView
@@ -155,8 +159,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/broken"
                 android:layout_margin="8sp"
+                android:maxWidth="150sp"
                 android:padding="8sp"
-                android:text="złamane drzewo"
+                android:text="nieprawidłowe parkowanie"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_category" />
 
@@ -164,10 +169,13 @@
                 android:id="@+id/broken_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/bad"
-                android:layout_margin="8sp"
-                android:layout_toRightOf="@+id/bad_label"
+                android:layout_marginBottom="8sp"
+                android:layout_marginRight="30sp"
+                android:layout_marginTop="8sp"
                 android:gravity="center"
+                android:maxWidth="150sp"
                 android:padding="8sp"
                 android:text="uszkodzenie mienia"
                 android:textColor="@android:color/black"
