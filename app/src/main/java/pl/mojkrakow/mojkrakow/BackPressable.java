@@ -8,6 +8,8 @@ package pl.mojkrakow.mojkrakow;
  */
 
 public interface BackPressable {
+
     void onBackButtonPressed();
+
     boolean shouldExitApp();
 }

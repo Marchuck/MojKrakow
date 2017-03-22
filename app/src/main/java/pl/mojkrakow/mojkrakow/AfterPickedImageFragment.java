@@ -52,7 +52,6 @@ public class AfterPickedImageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_picked_image, container, false);
         ButterKnife.bind(this, view);
 
-
         return view;
     }
 
@@ -69,7 +68,6 @@ public class AfterPickedImageFragment extends Fragment {
             public void accept(Object uri) throws Exception {
                 if (uri instanceof Uri)
                     updateImage((Uri) uri);
-
             }
         });
 

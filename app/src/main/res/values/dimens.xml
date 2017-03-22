@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="text_size_category">20sp</dimen>
+    <dimen name="title_text_size">25sp</dimen>
     <dimen name="image_size">80sp</dimen>
     <dimen name="image_margin">18sp</dimen>
     <dimen name="image_padding">8sp</dimen>

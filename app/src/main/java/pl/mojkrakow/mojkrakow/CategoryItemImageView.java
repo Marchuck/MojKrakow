@@ -17,6 +17,9 @@ import android.widget.ImageView;
 
 public class CategoryItemImageView extends ImageView implements View.OnClickListener {
 
+    public static final float BIG = 1.1f;
+    public static final float SMALL = 0.8f;
+
     @Nullable
     View.OnClickListener onClickListener;
 
@@ -45,10 +48,14 @@ public class CategoryItemImageView extends ImageView implements View.OnClickList
 
     private void init() {
         setOnClickListener(this);
-       this.setScaleX(0.8f);
-       this.setScaleY(0.8f);
-    }
+        scaleBoth(SMALL);
+        }
 
+    public void scaleBoth(float scale){
+        this.setScaleX(scale);
+        this.setScaleY(scale);
+
+    }
 
     public void addOnClickListener(OnClickListener l) {
         this.onClickListener = l;
@@ -56,25 +63,26 @@ public class CategoryItemImageView extends ImageView implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (onClickListener != null) {
-            onClickListener.onClick(v);
-        }
+
         isClicked = !isClicked;
 
         if (isClicked) {
-            animate().scaleX(1.1f)
-                    .scaleY(1.1f)
+            animate().scaleX(BIG)
+                    .scaleY(BIG)
                     .setDuration(300)
                     .setInterpolator(new BounceInterpolator())
                     .start();
         } else {
-            animate().scaleX(0.8f)
-                    .scaleY(0.8f)
+            animate().scaleX(SMALL)
+                    .scaleY(SMALL)
                     .setDuration(300)
                     .setInterpolator(new BounceInterpolator())
                     .start();
 
         }
         App.getApp().clicked.onNext(true);
+        if (onClickListener != null) {
+            onClickListener.onClick(v);
+        }
     }
 }

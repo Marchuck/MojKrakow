@@ -36,10 +36,10 @@
         </activity>
         <activity android:name=".takephoto.CameraActivity" />
         <activity android:name=".takephoto.RuntimePermissionActivity" />
-
         <activity
-            android:theme="@style/Theme.Intro"
-            android:name=".TutorialActivity"/>
+            android:name=".TutorialActivity"
+            android:theme="@style/Theme.Intro" />
+        <activity android:name=".view.MojKrakowActivity"></activity>
     </application>
 
 </manifest>
