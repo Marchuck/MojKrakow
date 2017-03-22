@@ -14,6 +14,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -105,39 +107,27 @@ public class PickImageFragment extends Fragment implements BackPressable {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle $) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
         ButterKnife.bind(this, view);
         getMainActivity().setBackPressedCallback(this);
 
+        App.getApp().clicked
+                .delay(500, TimeUnit.SECONDS)
+                .subscribe(new Observer<Boolean>() {
+                    public void onSubscribe(Disposable d) {
+                    }
 
-        App.getApp().clicked.subscribe(new Observer<Boolean>() {
-            @Override
-            @DebugLog
-            public void onSubscribe(Disposable d) {
+                    public void onNext(Boolean value) {
+                        onSend();
+                    }
 
-            }
+                    public void onError(Throwable e) {
+                    }
 
-            @DebugLog
-            @Override
-            public void onNext(Boolean value) {
-                onSend();
-            }
-
-            @Override
-            @DebugLog
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            @DebugLog
-            public void onComplete() {
-
-            }
-        });
+                    public void onComplete() {
+                    }
+                });
         return view;
     }
 
