@@ -22,4 +22,10 @@ public class IssueCategory {
         this.name = name;
         this.res = res;
     }
+
+    @Override
+    public String toString() {
+        return name;
+
+    }
 }

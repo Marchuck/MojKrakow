@@ -31,7 +31,7 @@ public class SelectCategorySlide extends SlideFragment {
 
     @Override
     public boolean canMoveFurther() {
-        return null != coordinator.getSelectedIssueCategory();
+        return true;
     }
 
     @Override

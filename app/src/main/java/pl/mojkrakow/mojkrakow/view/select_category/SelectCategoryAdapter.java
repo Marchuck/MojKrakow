@@ -64,6 +64,7 @@ public class SelectCategoryAdapter extends RecyclerView.Adapter<SelectCategoryAd
         } else {
             holder.imageView.scaleBoth(CategoryItemImageView.SMALL);
         }
+        holder.imageView.setBackgroundResource(item.res);
         holder.imageView.addOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

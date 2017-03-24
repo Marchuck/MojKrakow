@@ -28,17 +28,12 @@ public class SendEventSlide extends SlideFragment {
 
     @Override
     public int backgroundColor() {
-        return super.backgroundColor();
-    }
-
-    @Override
-    public boolean canMoveFurther() {
-        return super.canMoveFurther();
+        return getResources().getColor(R.color.colorAccent);
     }
 
     @Override
     public int buttonsColor() {
-        return super.buttonsColor();
+        return getResources().getColor(R.color.colorAccentDarker);
     }
 
     @Nullable
@@ -46,10 +41,5 @@ public class SendEventSlide extends SlideFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.send_event_slide, container, false);
         return view;
-    }
-
-    @Override
-    public String cantMoveFurtherErrorMessage() {
-        return super.cantMoveFurtherErrorMessage();
     }
 }

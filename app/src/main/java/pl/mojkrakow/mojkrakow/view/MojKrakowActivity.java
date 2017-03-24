@@ -3,8 +3,7 @@ package pl.mojkrakow.mojkrakow.view;
 import android.os.Bundle;
 
 import agency.tango.materialintroscreen.MaterialIntroActivity;
-import pl.mojkrakow.mojkrakow.view.select_category.SelectCategorySlide;
-import pl.mojkrakow.mojkrakow.view.send_event.SendEventSlide;
+import pl.mojkrakow.mojkrakow.view.additional_details.AdditionalDetailsSlide;
 
 public class MojKrakowActivity extends MaterialIntroActivity {
 
@@ -12,9 +11,9 @@ public class MojKrakowActivity extends MaterialIntroActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addSlide(new SelectCategorySlide());
-        addSlide(new SelectCategorySlide());
-        addSlide(new SendEventSlide());
+//        addSlide(new SelectCategorySlide());
+        addSlide(new AdditionalDetailsSlide());
+//        addSlide(new SendEventSlide());
 
     }
 
@@ -22,4 +21,6 @@ public class MojKrakowActivity extends MaterialIntroActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
 }

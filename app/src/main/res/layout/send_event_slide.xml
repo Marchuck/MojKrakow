@@ -18,6 +18,7 @@
         android:textSize="@dimen/title_text_size" />
 
     <Button
+
         android:id="@+id/okButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
