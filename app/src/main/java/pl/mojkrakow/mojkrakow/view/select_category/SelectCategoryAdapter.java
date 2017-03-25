@@ -29,6 +29,8 @@ public class SelectCategoryAdapter extends RecyclerView.Adapter<SelectCategoryAd
 
     List<IssueCategory> dataSet = new ArrayList<>();
 
+    int currentSelectedIndex = -1, previousSelectedIndex = -1;
+
     public SelectCategoryAdapter(List<IssueCategory> dataSet) {
         this.dataSet = dataSet;
     }
@@ -51,27 +53,33 @@ public class SelectCategoryAdapter extends RecyclerView.Adapter<SelectCategoryAd
 
     @Override
     public SelectCategoryAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, null, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
         return new SelectCategoryAdapterViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(SelectCategoryAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(final SelectCategoryAdapterViewHolder holder, final int position) {
         final IssueCategory item = dataSet.get(position);
         holder.textView.setText(String.valueOf(item));
-        if (item.selected) {
-            holder.imageView.scaleBoth(CategoryItemImageView.BIG);
-        } else {
-            holder.imageView.scaleBoth(CategoryItemImageView.SMALL);
-        }
+
         holder.imageView.setBackgroundResource(item.res);
+
         holder.imageView.addOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (listener != null) {
-                    item.selected = !item.selected;
-                    listener.onChosen(item);
-                    notifyDataSetChanged();
+                    item.selected = holder.imageView.isClicked;
+                    if (item.selected) {
+                        previousSelectedIndex = currentSelectedIndex;
+                        currentSelectedIndex = position;
+                        listener.onChosen(item);
+                    } else {
+                        previousSelectedIndex = -1;
+                        currentSelectedIndex = -1;
+                        listener.onChosen(null);
+                    }
+
                 }
             }
         });

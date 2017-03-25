@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/send_event_slide"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +8,7 @@
 
     <TextView
         android:id="@+id/title_sent_event"
+        android:padding="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -18,7 +18,10 @@
         android:textSize="@dimen/title_text_size" />
 
     <Button
-
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccentDarker"
+        style="?android:attr/borderlessButtonStyle"
         android:id="@+id/okButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

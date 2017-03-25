@@ -65,7 +65,7 @@ public class SelectCategoryCoordinator extends Coordinator implements SelectCate
     }
 
     @Nullable
-    public IssueCategory getSelectedIssueCategory() {
+    IssueCategory getSelectedIssueCategory() {
         return presenter.getIssueCategory();
     }
 }

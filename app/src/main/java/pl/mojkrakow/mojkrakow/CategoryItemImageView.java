@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Project "MojKrakow"
  * <p>
@@ -23,7 +25,7 @@ public class CategoryItemImageView extends ImageView implements View.OnClickList
     @Nullable
     View.OnClickListener onClickListener;
 
-    boolean isClicked;
+    public volatile boolean isClicked;
 
     public CategoryItemImageView(Context context) {
         super(context);
@@ -48,13 +50,17 @@ public class CategoryItemImageView extends ImageView implements View.OnClickList
 
     private void init() {
         setOnClickListener(this);
-        scaleBoth(SMALL);
-        }
+        setScaleX(SMALL);
+        setScaleY(SMALL);
 
-    public void scaleBoth(float scale){
-        this.setScaleX(scale);
-        this.setScaleY(scale);
+    }
 
+    @DebugLog
+    public void scaleBoth(float scale) {
+        animate().setDuration(300)
+                .scaleY(scale).scaleX(scale)
+                .setInterpolator(new BounceInterpolator())
+                .start();
     }
 
     public void addOnClickListener(OnClickListener l) {
@@ -80,7 +86,7 @@ public class CategoryItemImageView extends ImageView implements View.OnClickList
                     .start();
 
         }
-        App.getApp().clicked.onNext(true);
+//        App.getApp().clicked.onNext(true);
         if (onClickListener != null) {
             onClickListener.onClick(v);
         }

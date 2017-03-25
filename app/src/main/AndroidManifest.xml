@@ -33,8 +33,8 @@
         <activity android:name=".takephoto.CameraActivity" />
         <activity android:name=".takephoto.RuntimePermissionActivity" />
         <activity
-            android:name=".TutorialActivity"
-            android:theme="@style/Theme.Intro" />
+            android:name=".TutorialActivity" />
+
         <activity android:name=".view.MojKrakowActivity">
 
             <intent-filter>

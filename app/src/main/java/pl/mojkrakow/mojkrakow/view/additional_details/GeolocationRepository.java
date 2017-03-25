@@ -115,7 +115,7 @@ public class GeolocationRepository {
         });
     }
 
-    public Observable<Location> requestLocationUpdates(final @LocationProvider String provider) {
+    public Observable<Location> requestLocationUpdates(final  String provider) {
 
 
         return Observable.create(new ObservableOnSubscribe<Location>() {

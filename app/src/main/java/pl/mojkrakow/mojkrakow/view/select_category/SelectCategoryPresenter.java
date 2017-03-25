@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
 import pl.mojkrakow.mojkrakow.R;
 import pl.mojkrakow.mojkrakow.view.IssueCategory;
 
@@ -20,7 +21,7 @@ public class SelectCategoryPresenter implements SelectCategoryAdapter.OnIssueCho
     SelectCategoryView view;
 
     @Nullable
-    IssueCategory currentCategoryInUse;
+    volatile IssueCategory currentCategoryInUse;
 
     public SelectCategoryPresenter(SelectCategoryView view) {
         this.view = view;
@@ -38,10 +39,12 @@ public class SelectCategoryPresenter implements SelectCategoryAdapter.OnIssueCho
     }
 
     @Override
+    @DebugLog
     public void onChosen(IssueCategory category) {
         currentCategoryInUse = category;
     }
 
+    @Nullable
     IssueCategory getIssueCategory() {
         return currentCategoryInUse;
     }

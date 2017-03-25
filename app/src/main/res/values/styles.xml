@@ -1,13 +1,24 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
+
+    <style name="AppTheme" parent="Theme.Noob">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
 
+    <style name="Theme.Noob" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="squarecamera__CameraFullScreenTheme" parent="squarecamera__CameraFullScreenTheme.Base">
@@ -32,5 +43,6 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+
 
 </resources>

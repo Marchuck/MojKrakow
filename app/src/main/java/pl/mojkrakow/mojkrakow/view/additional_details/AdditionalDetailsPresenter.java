@@ -54,7 +54,7 @@ public class AdditionalDetailsPresenter extends BasePresenter {
                                 provider = LocationManager.GPS_PROVIDER;
                             }
                             view.showProgressBar();
-                            return repository.requestLocationUpdates(provider).take(1);
+                            return repository.requestLocationUpdates("fused").take(1);
                         }
                     }).flatMap(new Function<Location, ObservableSource<String>>() {
                 @Override
@@ -90,7 +90,7 @@ public class AdditionalDetailsPresenter extends BasePresenter {
     }
 
     public boolean canMoveFurther() {
-        return false;
+        return true;
     }
 
     public void onAdditionalTextChanged(CharSequence sequence) {

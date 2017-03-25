@@ -3,10 +3,13 @@ package pl.mojkrakow.mojkrakow.view.additional_details;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +52,7 @@ import static pl.mojkrakow.mojkrakow.MainActivity.REQUEST_CAMERA;
 public class AdditionalDetailsSlide extends SlideFragment implements AdditionalDetailsView {
 
     public static final String TAG = AdditionalDetailsSlide.class.getSimpleName();
+
 
 
     GeolocationRepository repository;
@@ -101,18 +105,18 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
     }
 
     @Override
-    public int backgroundColor() {
-        return getResources().getColor(R.color.colorAccent);
-    }
-
-    @Override
     public boolean canMoveFurther() {
         return presenter.canMoveFurther();
     }
 
     @Override
+    public int backgroundColor() {
+        return (R.color.colorAccent);
+    }
+
+    @Override
     public int buttonsColor() {
-        return getResources().getColor(R.color.colorAccentDarker);
+        return (R.color.colorAccentDarker);
     }
 
     @Nullable

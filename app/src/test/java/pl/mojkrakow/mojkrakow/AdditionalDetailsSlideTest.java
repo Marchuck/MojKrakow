@@ -87,4 +87,31 @@ public class AdditionalDetailsSlideTest {
         inOrder.verify(view).onReceiveLocation("POLEN");
         inOrder.verify(view).hideProgressBar();
     }
+
+    @Test
+    public void shouldFailGetLastLocation() {
+
+        //when
+        Location location = new Location("network");
+        location.setLatitude(50);
+        location.setLongitude(19);
+        Mockito.when(repository.requestLocationUpdates(LocationManager.NETWORK_PROVIDER))
+                .thenReturn(Observable.<Location>error(new Throwable("error")));
+
+        Mockito.when(repository.readableAddress(any(Location.class)))
+                .thenReturn(Observable.just("POLEN"));
+
+        Mockito.when(view.requestGeolocationPermission()).thenReturn(Observable.just(false));
+
+        //given
+        presenter.enableTestMode();
+        presenter.onSwitchChanged(true);
+
+        //then
+        InOrder inOrder = inOrder(view, view, view, view);
+        inOrder.verify(view).requestGeolocationPermission();
+        inOrder.verify(view).showProgressBar();
+        inOrder.verify(view).onErrorGetLocation();
+        inOrder.verify(view).hideProgressBar();
+    }
 }
