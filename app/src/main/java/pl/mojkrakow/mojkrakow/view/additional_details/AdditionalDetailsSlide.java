@@ -255,11 +255,14 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
     }
 
     @Override
+    @DebugLog
     public void onDestroyView() {
         super.onDestroyView();
         if (unbinder != null) {
             unbinder.unbind();
             unbinder = null;
         }
+        presenter.onDestroy();
+        presenter = null;
     }
 }

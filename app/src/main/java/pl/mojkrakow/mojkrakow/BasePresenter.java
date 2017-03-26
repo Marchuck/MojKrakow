@@ -25,7 +25,7 @@ public class BasePresenter {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
                 if (testmode) return upstream;
-                else return upstream.subscribeOn(Schedulers.computation())
+                else return upstream.subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };

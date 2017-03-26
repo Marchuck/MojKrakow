@@ -68,7 +68,7 @@ public class AdditionalDetailsSlideTest {
         Location location = new Location("network");
         location.setLatitude(50);
         location.setLongitude(19);
-        Mockito.when(repository.requestLocationUpdates(LocationManager.NETWORK_PROVIDER))
+        Mockito.when(repository.requestLocationUpdates())
                 .thenReturn(Observable.just(location));
 
         Mockito.when(repository.readableAddress(any(Location.class)))
@@ -95,7 +95,7 @@ public class AdditionalDetailsSlideTest {
         Location location = new Location("network");
         location.setLatitude(50);
         location.setLongitude(19);
-        Mockito.when(repository.requestLocationUpdates(LocationManager.NETWORK_PROVIDER))
+        Mockito.when(repository.requestLocationUpdates())
                 .thenReturn(Observable.<Location>error(new Throwable("error")));
 
         Mockito.when(repository.readableAddress(any(Location.class)))

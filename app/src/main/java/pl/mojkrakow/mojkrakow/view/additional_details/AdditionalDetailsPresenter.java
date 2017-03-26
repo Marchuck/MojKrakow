@@ -65,7 +65,7 @@ public class AdditionalDetailsPresenter extends BasePresenter {
 //                                provider = LocationManager.GPS_PROVIDER;
 //                            }
                             view.showProgressBar();
-                            return repository.requestLocationUpdates("fused");
+                            return repository.requestLocationUpdates();
                         }
                     }).flatMap(new Function<Location, ObservableSource<String>>() {
                 @Override
@@ -85,6 +85,8 @@ public class AdditionalDetailsPresenter extends BasePresenter {
                         public void onNext(String value) {
                             currentLocation = value;
                             view.onReceiveLocation(value);
+                            if (geolocationDisposable != null)
+                                geolocationDisposable.dispose();
                         }
 
                         @Override
@@ -180,5 +182,12 @@ public class AdditionalDetailsPresenter extends BasePresenter {
                     }
                 });
 
+    }
+
+    public void onDestroy() {
+        if (currentCategoryDisposable != null)
+            currentCategoryDisposable.dispose();
+        if (geolocationDisposable != null)
+            geolocationDisposable.dispose();
     }
 }

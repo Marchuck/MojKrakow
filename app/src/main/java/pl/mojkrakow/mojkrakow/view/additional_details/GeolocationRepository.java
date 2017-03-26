@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,6 +23,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 import static io.reactivex.Maybe.error;
 
@@ -76,123 +76,53 @@ public class GeolocationRepository {
 
     @DebugLog
     public Observable<String> readableAddress(@NonNull final Location location) {
-        return getAddress(location).map(new Function<Address, String>() {
-            @Override
-            public String apply(@NonNull Address address) throws Exception {
+        return getAddress(location)
+                .subscribeOn(Schedulers.newThread())
+                .map(new Function<Address, String>() {
+                    @Override
+                    public String apply(@NonNull Address address) throws Exception {
 
-                StringBuilder s = new StringBuilder();
-                int maLines = address.getMaxAddressLineIndex();
-                if (maLines > 2) {
-                    return s.append(address.getAddressLine(2))
-                            .append(" ")
-                            .append(address.getAddressLine(1))
-                            .append(" ")
-                            .append(address.getAddressLine(0))
-                            .toString();
-                } else if (maLines > 1) {
-                    return s.append(address.getAddressLine(1))
-                            .append(" ")
-                            .append(address.getAddressLine(0))
-                            .toString();
-                } else if (maLines == 1) {
-                    return s.append(address.getAddressLine(1))
-                            .append(" ")
-                            .append(address.getAddressLine(0))
-                            .toString();
-                }
-                throw new NoSuchFieldException("null");
-            }
-        }).onErrorReturn(new Function<Throwable, String>() {
-            @Override
-            public String apply(Throwable throwable) throws Exception {
-                if (throwable instanceof NoSuchFieldException) {
-                    double lat = location.getLatitude();
-                    double lon = location.getLongitude();
+                        StringBuilder s = new StringBuilder();
+                        int maLines = address.getMaxAddressLineIndex();
+                        if (maLines > 2) {
+                            return s.append(address.getAddressLine(2))
+                                    .append(" ")
+                                    .append(address.getAddressLine(1))
+                                    .append(" ")
+                                    .append(address.getAddressLine(0))
+                                    .toString();
+                        } else if (maLines > 1) {
+                            return s.append(address.getAddressLine(1))
+                                    .append(" ")
+                                    .append(address.getAddressLine(0))
+                                    .toString();
+                        } else if (maLines == 1) {
+                            return s.append(address.getAddressLine(1))
+                                    .append(" ")
+                                    .append(address.getAddressLine(0))
+                                    .toString();
+                        }
+                        throw new NoSuchFieldException("null");
+                    }
+                }).onErrorReturn(new Function<Throwable, String>() {
+                    @Override
+                    public String apply(Throwable throwable) throws Exception {
+                        if (throwable instanceof NoSuchFieldException) {
+                            double lat = location.getLatitude();
+                            double lon = location.getLongitude();
 
-                    return "(" + lat + ", " + lon + ")";
-                } else return "?";
-            }
-        });
+                            return "(" + lat + ", " + lon + ")";
+                        } else return "?";
+                    }
+                });
     }
 
-    Observable<Location> locationUpdates;
+    private ObservableOnSubscribe<Location> locationUpdatesOnSubscribe;
 
-    public Observable<Location> requestLocationUpdates(final String provider) {
-
-        if (locationUpdates == null)
-            locationUpdates = Observable.create(new ObservableOnSubscribe<Location>() {
-
-                AtomicBoolean disposed = new AtomicBoolean(false);
-
-                @Override
-                public void subscribe(final ObservableEmitter<Location> e) throws Exception {
-
-                    final LocationListener ll = new LocationListener() {
-                        @Override
-                        @DebugLog
-                        public void onLocationChanged(Location location) {
-                            if (!disposed.get()) {
-                                e.onNext(location);
-                            }
-
-                        }
-
-                        @Override
-                        @DebugLog
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                        }
-
-                        @Override
-                        @DebugLog
-                        public void onProviderEnabled(String provider) {
-
-                        }
-
-                        @Override
-                        @DebugLog
-                        public void onProviderDisabled(String provider) {
-
-                        }
-                    };
-
-                    e.setDisposable(new Disposable() {
-                        @Override
-                        @DebugLog
-                        public void dispose() {
-                            disposed.set(true);
-                            try {
-                                locationManager.removeUpdates(ll);
-                                requested.set(false);
-                            } catch (SecurityException x) {
-                                e.onError(x);
-                            }
-                        }
-
-                        @Override
-                        @DebugLog
-                        public boolean isDisposed() {
-                            return disposed.get();
-                        }
-                    });
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                if (!requested.get()) {
-                                    locationManager.requestLocationUpdates(provider, 0, 0, ll);
-                                    requested.set(true);
-                                }
-                            } catch (SecurityException x) {
-                                e.onError(x);
-                            }
-                        }
-                    });
-                }
-            });
-
-        return locationUpdates;
+    public Observable<Location> requestLocationUpdates() {
+        if (locationUpdatesOnSubscribe == null) {
+            locationUpdatesOnSubscribe = new GeolocationObservableOnSubscribe(locationManager);
+        }
+        return Observable.create(locationUpdatesOnSubscribe);
     }
-
 }
