@@ -24,12 +24,12 @@ import io.reactivex.functions.Cancellable;
  */
 
 public class GeolocationObservableOnSubscribe implements ObservableOnSubscribe<Location>,
-        LocationListener, Disposable, Cancellable {
+        LocationListener, Disposable, Cancellable, Runnable {
 
     public static final String TAG = GeolocationObservableOnSubscribe.class.getSimpleName();
     AtomicBoolean disposed = new AtomicBoolean(false);
     ObservableEmitter<Location> e;
-
+    Handler handler;
     LocationManager locationManager;
 
     public GeolocationObservableOnSubscribe(LocationManager mgr) {
@@ -37,20 +37,12 @@ public class GeolocationObservableOnSubscribe implements ObservableOnSubscribe<L
     }
 
     @Override
-    public void subscribe(ObservableEmitter<Location> e) throws Exception {
-        this.e = e;
+    public void subscribe(ObservableEmitter<Location> _e) throws Exception {
+        this.e = _e;
         this.e.setDisposable(this);
         this.e.setCancellable(this);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    locationManager.requestLocationUpdates("fused", 0, 0, GeolocationObservableOnSubscribe.this);
-                } catch (SecurityException calledWhenPermsiionsNotGranted) {
-                    GeolocationObservableOnSubscribe.this.e.onError(calledWhenPermsiionsNotGranted);
-                }
-            }
-        });
+        handler = new Handler(Looper.getMainLooper());
+        handler.post(this);
     }
 
     @Override
@@ -85,11 +77,13 @@ public class GeolocationObservableOnSubscribe implements ObservableOnSubscribe<L
         }
 
         disposed.set(true);
+        handler.removeCallbacks(this);
         try {
             locationManager.removeUpdates(this);
         } catch (SecurityException x) {
             Log.e(TAG, "dispose: error", x);
         }
+
     }
 
     @Override
@@ -102,5 +96,15 @@ public class GeolocationObservableOnSubscribe implements ObservableOnSubscribe<L
     @DebugLog
     public void cancel() throws Exception {
         dispose();
+    }
+
+    @Override
+    public void run() {
+        try {
+            if (!e.isDisposed())
+                locationManager.requestLocationUpdates("fused", 0, 0, GeolocationObservableOnSubscribe.this);
+        } catch (SecurityException calledWhenPermsiionsNotGranted) {
+            GeolocationObservableOnSubscribe.this.e.onError(calledWhenPermsiionsNotGranted);
+        }
     }
 }
