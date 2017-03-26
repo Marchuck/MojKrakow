@@ -11,10 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.coordinators.Coordinator;
-import com.squareup.coordinators.CoordinatorProvider;
-import com.squareup.coordinators.Coordinators;
-
 import java.util.List;
 
 import agency.tango.materialintroscreen.SlideFragment;
@@ -31,7 +27,7 @@ import pl.mojkrakow.mojkrakow.view.IssueCategory;
  * on 22.03.2017.
  */
 
-public class SelectCategorySlide extends SlideFragment implements SelectCategoryView{
+public class SelectCategorySlide extends SlideFragment implements SelectCategoryView {
     Unbinder unbinder;
     SelectCategoryPresenter presenter;
 
@@ -51,7 +47,7 @@ public class SelectCategorySlide extends SlideFragment implements SelectCategory
 
     @Override
     public boolean canMoveFurther() {
-        return presenter.getIssueCategory() != null;
+        return presenter.canMoveFurther();
     }
 
     @Nullable
@@ -68,14 +64,7 @@ public class SelectCategorySlide extends SlideFragment implements SelectCategory
         recyclerView.setAdapter(adapter);
         adapter.listener = presenter;
         presenter.requestCategories();
-//        Coordinators.bind(view.findViewById(R.id.slide_select_category), new CoordinatorProvider() {
-//            @Nullable
-//            @Override
-//            public Coordinator provideCoordinator(View view) {
-//                coordinator = new SelectCategoryCoordinator();
-//                return coordinator;
-//            }
-//        });
+
         return view;
     }
 
@@ -83,8 +72,9 @@ public class SelectCategorySlide extends SlideFragment implements SelectCategory
     public void showCategories(List<IssueCategory> categoryList) {
         adapter.refreshDataset(categoryList);
     }
+
     @Override
     public String cantMoveFurtherErrorMessage() {
-        return "Wybierz kategorię!";
+       return presenter.cantMoveFurtherErrorMessage();
     }
 }

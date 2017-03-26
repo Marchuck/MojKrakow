@@ -4,8 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 
+import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
+import pl.mojkrakow.mojkrakow.view.IssueCategory;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -21,6 +23,7 @@ public class App extends Application {
 
     public Subject<Uri> imageUriSubject = BehaviorSubject.create();
     public Subject<Boolean> clicked = BehaviorSubject.create();
+    public Subject<IssueCategory> issueCategorySubject = BehaviorSubject.create();
     public Uri data;
 
     public static App getApp() {
@@ -40,5 +43,9 @@ public class App extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+    }
+
+    public Subject<IssueCategory> getCurrentCategoryBus() {
+        return issueCategorySubject;
     }
 }

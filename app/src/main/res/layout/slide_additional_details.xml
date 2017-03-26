@@ -1,137 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/slide_select_category"
+    android:id="@+id/slide_select_category__"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorPrimary">
 
-    <android.support.v7.widget.CardView
-
-        android:id="@+id/geolocation_card"
+    <RelativeLayout
+        android:id="@+id/slide_select_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="48dp"
-        android:elevation="@dimen/activity_horizontal_margin"
-        android:padding="@dimen/activity_horizontal_margin"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:cardCornerRadius="@dimen/activity_horizontal_margin">
+        android:background="@color/colorPrimary">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/category_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            tools:text="Kategoria : utrudnienia na drodze" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/geolocation_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/category_description"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:elevation="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/activity_horizontal_margin"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="@dimen/activity_horizontal_margin">
 
-            <TextView
-                android:id="@+id/geolocation_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:text="Lokalizacja"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/title_text_size" />
-
-            <Switch
-                android:id="@+id/geolocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/activity_horizontal_margin" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-            <TextView
-                android:id="@+id/address_summary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/geolocation_label"
-                android:layout_marginLeft="@dimen/image_padding_"
-                android:layout_marginBottom="@dimen/image_padding_"
-                android:textSize="16sp"
-                tools:text="Lenartowicza 213" />
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/additional_text_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/geolocation_card"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:elevation="@dimen/activity_horizontal_margin"
-        android:padding="@dimen/activity_horizontal_margin"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:cardCornerRadius="@dimen/activity_horizontal_margin">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/additional_text"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:hint="Dodatkowy opis..."
+                android:layout_height="wrap_content">
 
-                android:textSize="@dimen/title_text_size" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/geolocation_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:text="Lokalizacja"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
-    </android.support.v7.widget.CardView>
+                <Switch
+                    android:id="@+id/geolocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="16sp" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/image_viewgroup_card_pick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/additional_text_card"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="48sp"
-        android:elevation="@dimen/activity_horizontal_margin"
-        android:padding="@dimen/activity_horizontal_margin"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:cardCornerRadius="@dimen/activity_horizontal_margin">
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
-        <RelativeLayout
+                <TextView
+                    android:id="@+id/address_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/geolocation_label"
+                    android:layout_marginBottom="@dimen/image_padding_"
+                    android:layout_marginLeft="@dimen/image_padding_"
+                    android:textSize="16sp"
+                    tools:text="Smocza 6" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/additional_text_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/geolocation_card"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:elevation="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="@dimen/activity_horizontal_margin">
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="250sp"
-                android:layout_height="250sp"
-                android:layout_centerInParent="true"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:padding="@dimen/activity_horizontal_margin"
-                android:visibility="gone" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/pick_image"
-                android:textColor="@color/colorAccentDarker"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:text="ZRÓB ZDJĘCIE"
-                android:textSize="@dimen/activity_horizontal_margin" />
+                <EditText
+                    android:id="@+id/additional_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:hint="Dodatkowy opis..."
 
-        </RelativeLayout>
+                    android:textSize="@dimen/title_text_size" />
+            </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+        <android.support.v7.widget.CardView
+            android:id="@+id/image_viewgroup_card_pick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/additional_text_card"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:elevation="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/activity_horizontal_margin"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="@dimen/activity_horizontal_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="250sp"
+                    android:layout_height="250sp"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/pick_image"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:text="ZRÓB ZDJĘCIE"
+                    android:textColor="@color/colorAccentDarker"
+                    android:textSize="@dimen/activity_horizontal_margin" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_viewgroup_card_pick"
+            android:layout_marginBottom="48sp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:elevation="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/activity_horizontal_margin"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="@dimen/activity_horizontal_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/sendEmail"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:text="Wyślij email do ZIKiT"
+                    android:textColor="@color/colorAccentDarker"
+                    android:textSize="@dimen/activity_horizontal_margin" />
+
+                <Button
+                    android:id="@+id/callThem"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sendEmail"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:text="Zadzwoń do ZIKiT"
+                    android:textColor="@color/colorAccentDarker"
+                    android:textSize="@dimen/activity_horizontal_margin" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</ScrollView>

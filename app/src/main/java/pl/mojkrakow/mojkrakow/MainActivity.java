@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final int REQUEST_CAMERA = 2137;
+    public static final int EMAIL_SEND = 3000;
     public Uri data;
 
     public Subject<Object> subject = ReplaySubject.create();
@@ -94,4 +95,5 @@ public class MainActivity extends AppCompatActivity {
     public void setBackPressedCallback(PickImageFragment backPressedCallback) {
         this.backPressedCallback = backPressedCallback;
     }
+
 }

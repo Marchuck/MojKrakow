@@ -10,7 +10,7 @@ import io.reactivex.disposables.Disposable;
  * on 24.03.2017.
  */
 
-public abstract class KrkObserver<KRAK> implements Observer<KRAK> {
+public abstract class KrkObserver<I> implements Observer<I> {
     @Override
     public void onSubscribe(Disposable d) {
 

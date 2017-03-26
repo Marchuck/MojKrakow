@@ -11,5 +11,5 @@ import android.app.Activity;
 
 public interface Sendable {
 
-    void send(Activity a, String email, String title, String content);
+    void send();
 }

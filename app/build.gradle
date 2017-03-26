@@ -65,7 +65,6 @@ dependencies {
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.squareup.coordinators:coordinators:0.2'
     compile "agency.tango.android:material-intro-screen:${material_intro_latest_release}"
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }

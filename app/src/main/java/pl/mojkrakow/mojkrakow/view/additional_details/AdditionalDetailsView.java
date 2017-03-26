@@ -11,13 +11,15 @@ import io.reactivex.Observable;
 
 public interface AdditionalDetailsView {
 
-
     Observable<Boolean> requestGeolocationPermission();
 
     void onReceiveLocation(String value);
 
     void hideProgressBar();
+
     void showProgressBar();
 
     void onErrorGetLocation();
+
+    void onReceivedNewCategoryDescription(String name);
 }

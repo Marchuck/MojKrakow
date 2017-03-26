@@ -18,6 +18,8 @@ public class IssueCategory {
 
     public volatile boolean selected;
 
+    public boolean isShipped = false;
+
     public IssueCategory(String name, int res) {
         this.name = name;
         this.res = res;
@@ -27,5 +29,10 @@ public class IssueCategory {
     public String toString() {
         return name;
 
+    }
+
+    public IssueCategory setShipped(boolean shipped) {
+        this.isShipped = shipped;
+        return this;
     }
 }

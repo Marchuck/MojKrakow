@@ -115,78 +115,84 @@ public class GeolocationRepository {
         });
     }
 
-    public Observable<Location> requestLocationUpdates(final  String provider) {
+    Observable<Location> locationUpdates;
 
+    public Observable<Location> requestLocationUpdates(final String provider) {
 
-        return Observable.create(new ObservableOnSubscribe<Location>() {
+        if (locationUpdates == null)
+            locationUpdates = Observable.create(new ObservableOnSubscribe<Location>() {
 
-            AtomicBoolean disposed = new AtomicBoolean(false);
+                AtomicBoolean disposed = new AtomicBoolean(false);
 
-            @Override
-            public void subscribe(final ObservableEmitter<Location> e) throws Exception {
+                @Override
+                public void subscribe(final ObservableEmitter<Location> e) throws Exception {
 
-                final LocationListener ll = new LocationListener() {
-                    @Override
-                    @DebugLog
-                    public void onLocationChanged(Location location) {
-                        e.onNext(location);
-
-                    }
-
-                    @Override
-                    @DebugLog
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                    }
-
-                    @Override
-                    @DebugLog
-                    public void onProviderEnabled(String provider) {
-
-                    }
-
-                    @Override
-                    @DebugLog
-                    public void onProviderDisabled(String provider) {
-
-                    }
-                };
-
-                e.setDisposable(new Disposable() {
-                    @Override
-                    @DebugLog
-                    public void dispose() {
-                        disposed.set(true);
-                        try {
-                            locationManager.removeUpdates(ll);
-                            requested.set(false);
-                        } catch (SecurityException x) {
-                            e.onError(x);
-                        }
-                    }
-
-                    @Override
-                    @DebugLog
-                    public boolean isDisposed() {
-                        return disposed.get();
-                    }
-                });
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            if (!requested.get()) {
-                                locationManager.requestLocationUpdates(provider, 0, 0, ll);
-                                requested.set(true);
+                    final LocationListener ll = new LocationListener() {
+                        @Override
+                        @DebugLog
+                        public void onLocationChanged(Location location) {
+                            if (!disposed.get()) {
+                                e.onNext(location);
                             }
-                        } catch (SecurityException x) {
-                            e.onError(x);
+
                         }
-                    }
-                });
-            }
-        });
+
+                        @Override
+                        @DebugLog
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        @DebugLog
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        @DebugLog
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    };
+
+                    e.setDisposable(new Disposable() {
+                        @Override
+                        @DebugLog
+                        public void dispose() {
+                            disposed.set(true);
+                            try {
+                                locationManager.removeUpdates(ll);
+                                requested.set(false);
+                            } catch (SecurityException x) {
+                                e.onError(x);
+                            }
+                        }
+
+                        @Override
+                        @DebugLog
+                        public boolean isDisposed() {
+                            return disposed.get();
+                        }
+                    });
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if (!requested.get()) {
+                                    locationManager.requestLocationUpdates(provider, 0, 0, ll);
+                                    requested.set(true);
+                                }
+                            } catch (SecurityException x) {
+                                e.onError(x);
+                            }
+                        }
+                    });
+                }
+            });
+
+        return locationUpdates;
     }
 
 }

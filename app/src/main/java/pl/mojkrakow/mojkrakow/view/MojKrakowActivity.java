@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.View;
 
 import agency.tango.materialintroscreen.MaterialIntroActivity;
+import agency.tango.materialintroscreen.MaterializedActivity;
 import agency.tango.materialintroscreen.animations.IViewTranslation;
+import hugo.weaving.DebugLog;
 import pl.mojkrakow.mojkrakow.view.additional_details.AdditionalDetailsSlide;
 import pl.mojkrakow.mojkrakow.view.select_category.SelectCategorySlide;
 import pl.mojkrakow.mojkrakow.view.send_event.SendEventSlide;
 
-public class MojKrakowActivity extends MaterialIntroActivity {
+public class MojKrakowActivity extends MaterializedActivity {
 
     public static final String TAG = MojKrakowActivity.class.getSimpleName();
 
@@ -39,5 +41,8 @@ public class MojKrakowActivity extends MaterialIntroActivity {
         super.onBackPressed();
     }
 
-
+    @DebugLog
+    public void onNextPressed() {
+        nextButton.performClick();
+    }
 }

@@ -1,22 +1,16 @@
 package pl.mojkrakow.mojkrakow.view.additional_details;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,16 +24,20 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import butterknife.Unbinder;
 import hugo.weaving.DebugLog;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
-import pl.mojkrakow.mojkrakow.PickImageFragment;
 import pl.mojkrakow.mojkrakow.R;
 import pl.mojkrakow.mojkrakow.takephoto.CameraActivity;
+import pl.mojkrakow.mojkrakow.view.MojKrakowActivity;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static pl.mojkrakow.mojkrakow.MainActivity.EMAIL_SEND;
 import static pl.mojkrakow.mojkrakow.MainActivity.REQUEST_CAMERA;
 
 /**
@@ -52,21 +50,21 @@ import static pl.mojkrakow.mojkrakow.MainActivity.REQUEST_CAMERA;
 public class AdditionalDetailsSlide extends SlideFragment implements AdditionalDetailsView {
 
     public static final String TAG = AdditionalDetailsSlide.class.getSimpleName();
-
-
-
+    Unbinder unbinder;
     GeolocationRepository repository;
     RxPermissions permissions;
     AdditionalDetailsPresenter presenter;
 
     @OnCheckedChanged(R.id.geolocation)
     void onSwitchChecked(boolean newValue) {
-
         presenter.onSwitchChanged(newValue);
     }
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    @BindView(R.id.category_description)
+    TextView categoryDescription;
 
     @BindView(R.id.address_summary)
     TextView addressSummary;
@@ -82,6 +80,19 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
 
     @BindView(R.id.image)
     ImageView image;
+
+    @DebugLog
+    @OnClick(R.id.sendEmail)
+    void sendEmail() {
+        presenter.sendEmail(this);
+
+    }
+
+    @DebugLog
+    @OnClick(R.id.callThem)
+    void callThem() {
+        presenter.callPhone(getActivity(), getRxPermissions());
+    }
 
     @OnClick(R.id.pick_image)
     void onImagePick() {
@@ -123,11 +134,24 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.slide_additional_details, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         repository = new GeolocationRepository(getActivity());
         presenter = new AdditionalDetailsPresenter(this, repository);
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.onPause();
+    }
+
 
     @Override
     public String cantMoveFurtherErrorMessage() {
@@ -136,13 +160,13 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
 
     @Override
     public Observable<Boolean> requestGeolocationPermission() {
-        return getRxPermissions().request(Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION);
+        return getRxPermissions().request(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION);
     }
 
     @Override
     public void onReceiveLocation(String value) {
         addressSummary.setText(value);
+        hideProgressBar();
     }
 
     @Override
@@ -170,17 +194,29 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
         progressBar.setVisibility(View.VISIBLE);
         if (getView() != null)
             Snackbar.make(getView(), "Ups! Spróbuj ponownie później", Snackbar.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onReceivedNewCategoryDescription(String name) {
+        categoryDescription.setText(name);
     }
 
     @Override
     @DebugLog
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
-        if (resultCode != Activity.RESULT_OK) return;
-
+        if (resultCode != Activity.RESULT_OK) {
+            if (requestCode == EMAIL_SEND) {
+                ((MojKrakowActivity) getActivity()).onNextPressed();
+            }
+            return;
+        }
+        if (requestCode == EMAIL_SEND) {
+            ((MojKrakowActivity) getActivity()).onNextPressed();
+        }
         if (requestCode == REQUEST_CAMERA) {
             final Uri uri = data.getData();
             if (uri != null) {
+                presenter.setImageUri(uri);
                 image.setScaleY(0.0f);
                 image.setVisibility(View.VISIBLE);
 
@@ -215,5 +251,14 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
     private RxPermissions getRxPermissions() {
         if (permissions == null) permissions = new RxPermissions(getActivity());
         return permissions;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder != null) {
+            unbinder.unbind();
+            unbinder = null;
+        }
     }
 }
