@@ -211,7 +211,8 @@ public class AdditionalDetailsSlide extends SlideFragment implements AdditionalD
             return;
         }
         if (requestCode == EMAIL_SEND) {
-            ((MojKrakowActivity) getActivity()).onNextPressed();
+            //todo: get result from email intent...
+            //((MojKrakowActivity) getActivity()).onNextPressed();
         }
         if (requestCode == REQUEST_CAMERA) {
             final Uri uri = data.getData();
