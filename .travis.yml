@@ -1,0 +1,77 @@
+sudo: required
+language: android
+jdk: oraclejdk8
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-25.0.1
+    - android-25
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - sys-img-armeabi-v7a-android-16
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/2.8
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+
+addons:
+  apt_packages:
+    - pandoc
+  artifacts:
+    paths:
+      - $(git ls-files -o | grep build/outputs | tr "\n" ":")
+
+before_install:
+  - pip install --user codecov
+
+
+branches:
+  only:
+  - coordinator
+#  except:
+#  - master
+
+before_script:
+  - echo no | android create avd --force -n test -t android-16 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - sleep 10
+  - adb shell input keyevent 82
+
+script:
+   - ./gradlew connectedAndroidTest
+   - ./gradlew build connectedCheck
+#after_success:
+#  - ./gradlew crashlyticsUploadDistributionDebug
+#  - mkdir -p app/build/reports/jacoco/test/
+#  - cp app/build/reports/coverage/debug/report.xml app/build/reports/jacoco/test/jacocoTestReport.xml
+#  - ./gradlew coveralls
+after_success:
+  - ./gradlew jacocoFullReport
+  - pip install --user codecov
+  - codecov
+after_failure:
+   - "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+   - "git branch"
+   - wget http://imgur.com/tools/imgurbash.sh
+   - chmod a+x imgurbash.sh
+   - adb shell screencap -p | sed 's/\r$//' &gt; screen.png
+   - ./imgurbash.sh screen.png
+   - pandoc builder/build/reports/tests/index.html -t plain | sed -n '/^Failed tests/,/default-package/p'
+#notifications:
+
+#  slack:
+notifications:
+  slack: next42team:gjNbep7op84RBU00BCLROfdG
+
+  email:
+    recipients:
+      - lukmar993@gmail.com
+    on_success: always
+on_failure: always

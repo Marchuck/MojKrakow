@@ -78,6 +78,8 @@ public class AdditionalDetailsPresenter extends BasePresenter {
                         @Override
                         public void run() throws Exception {
                             view.hideProgressBar();
+                            if (geolocationDisposable != null)
+                                geolocationDisposable.dispose();
                         }
                     })
                     .subscribeWith(new KrkObserver<String>() {
@@ -85,8 +87,7 @@ public class AdditionalDetailsPresenter extends BasePresenter {
                         public void onNext(String value) {
                             currentLocation = value;
                             view.onReceiveLocation(value);
-                            if (geolocationDisposable != null)
-                                geolocationDisposable.dispose();
+
                         }
 
                         @Override
