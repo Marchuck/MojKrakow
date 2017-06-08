@@ -65,7 +65,7 @@ public class AdditionalDetailsSlideTest {
     public void shouldSwitchLocationOn() {
 
         //when
-        Location location = new Location("network");
+        Location location = new Location("fused");
         location.setLatitude(50);
         location.setLongitude(19);
         Mockito.when(repository.requestLocationUpdates())
@@ -98,8 +98,6 @@ public class AdditionalDetailsSlideTest {
         Mockito.when(repository.requestLocationUpdates())
                 .thenReturn(Observable.<Location>error(new Throwable("error")));
 
-        Mockito.when(repository.readableAddress(any(Location.class)))
-                .thenReturn(Observable.just("POLEN"));
 
         Mockito.when(view.requestGeolocationPermission()).thenReturn(Observable.just(false));
 
